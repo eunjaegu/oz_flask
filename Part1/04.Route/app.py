@@ -1,3 +1,5 @@
+# 라우팅(routing) 
+# 경로로 들어오는 요청에 대해 응답을 리턴
 from flask import Flask, request, Response
 
 app = Flask(__name__)

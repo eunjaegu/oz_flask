@@ -5,6 +5,7 @@ from flask_restful import Resource
 items = [] # DB의 대체 역할 (간단한 DB 역할)
 
 # Resource : MethodView
+# Resource 클래스를 상속받은 클래스 정의
 class Item(Resource):
     # 특정 아이템 조회
     def get(self, name):
