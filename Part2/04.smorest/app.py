@@ -6,6 +6,8 @@ app = Flask(__name__)
 
 # RestAPI를 정렬해서 보여주는 툴
 # OpenAPI 관련 설정
+# 스웨거(Swagger) 문서 페이지 설정
+# OAS(Open Api Specification) - Swagger UI
 app.config["API_TITLE"] = "My API"
 app.config["API_VERSION"] = "v1"
 app.config["OPENAPI_VERSION"] = "3.1.3"

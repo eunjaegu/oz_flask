@@ -1,5 +1,5 @@
 from flask.views import MethodView
-from flask_smorest import Blueprint, abort
+from flask_smorest import Blueprint, abort 
 from schemas import ItemSchema
 
 # 📌 Blueprint 객체 생성
@@ -10,7 +10,7 @@ blp = Blueprint("items", "items", url_prefix="/items", description="Operations o
 # 📌 데이터를 저장할 임시 리스트 (DB 대신)
 items = []
 
-# 'ItemList' 클래스 - /items 경로에 대한 GET 및 POST 요청을 처리(메서드 정의))
+# 'ItemList' 클래스 - /items 경로에 대한 GET() 및 POST 요청을 처리(메서드 정의))
 @blp.route("/")
 class ItemList(MethodView):
     # GET 요청 시 응답 코드 200, 자동으로 JSON 반환
@@ -43,6 +43,7 @@ class Item(MethodView):
 
     #요청으로 들어온 JSON 데이터를 검증하고, Python 객체로 변환해주는 데코레이터
     @blp.arguments(ItemSchema)
+    #응답
     @blp.response(200, description="Item updated")
     def put(self, new_data, item_id):
         # 특정 ID를 가진 아이템을 업데이트하는 PUT 요청 처리
@@ -67,6 +68,4 @@ class Item(MethodView):
         items = [item for item in items if item["id"] != item_id]
         return ''
     
-# 각 클래스를 블루프린트에 등록
-blp.register_view(ItemList, 'item_list', '/')
-blp.register_view(Item, 'item', '/<int:item_id>')    
+
