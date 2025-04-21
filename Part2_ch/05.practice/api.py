@@ -18,18 +18,18 @@ books = []
 #예: /books/<int:book_id> 같은 경로에 대한 클래스/메서드를 정의할 
 @book_blp.route('/')
 class BookList(MethodView) :
-        #many=True : 전체 데이터 조회
-        @book_blp.response(200, BookSchema(many=True))
-        def get(self):
-                return books
-        
-        @book_blp.arguments(BookSchema)
-        @book_blp.response(201, BookSchema)
-        def post(self, new_data):
-                new_data['id'] = len(books) +1
-                print(new_data['id'])
-                books.append(new_data)
-                return new_data
+    #many=True : 전체 데이터 조회
+    @book_blp.response(200, BookSchema(many=True))
+    def get(self):
+            return books
+    
+    @book_blp.arguments(BookSchema)
+    @book_blp.response(201, BookSchema)
+    def post(self, new_data):
+            new_data['id'] = len(books) +1
+            print(new_data['id'])
+            books.append(new_data)
+            return new_data
 
 @book_blp.route('/<int:book_id>')
 class Book(MethodView):
