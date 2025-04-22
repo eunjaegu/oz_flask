@@ -3,6 +3,7 @@ from flask_smorest import Api
 from db import db
 from models import User, Board
 
+
 app = Flask(__name__)
 
 #SQLAlchemy
@@ -21,13 +22,17 @@ app.config["OPENAPI_SWAGGER_UI_URL"] = "https://cdn.jsdelivr.net/npm/swagger-ui-
 
 api = Api(app)
 
-# api.register_bluepring()
+from routes.board import board_blp
+from routes.users import user_blp
+api.register_blueprint(board_blp)
+api.register_blueprint(user_blp) 
+
 
 @app.route('/manager-boards')
 def manage_boards():
     return render_template('boards.html')
 
-@app.route('/manage-users')
+@app.route('/manager-users')
 def manage_users():
     return render_template('users.html')
 
@@ -35,5 +40,6 @@ def manage_users():
 if __name__ == '__main__':
     with app.app_context():
         db.create_all() # 데이터베이스 생성
+        #db.drop_all()
 
     app.run(debug=True)       

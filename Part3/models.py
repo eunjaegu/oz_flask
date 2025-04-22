@@ -10,7 +10,7 @@ class User(db.Model):
 
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(100), unique=True, nullable=False)
-    eamil = db.Column(db.String(100), unique=True, nullable=False)
+    email = db.Column(db.String(100), unique=True, nullable=False)
     boards = db.relationship('Board', back_populates='author', lazy='dynamic') # 역참조
 
 class Board(db.Model):
@@ -18,7 +18,7 @@ class Board(db.Model):
 
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String(100), nullable=False)
-    econtent = db.Column(db.String(300), unique=True, nullable=False)
+    content = db.Column(db.String(300), nullable=False)
     user_id = db.Column(db.Integer, db.ForeignKey("users.id"), nullable=False)
     author = db.relationship('User', back_populates='boards')
 
