@@ -1,18 +1,18 @@
 # 라우팅, 블루프린트를 사용해서 url과 함수를 매핑하는 라우트역할
-from flask import render_template, request, redirect, url_for
-from models import User, user
-from flask_login import login_user
+from flask import render_template, request, redirect, url_for, session
+from models import User, users
+from flask_login import login_user, login_required, logout_user
 
-def configure_route(app):
+def configure_routes(app):
     # 메인
     @app.route('/')
     def index():
         return render_template('index.html')
 
     # 로그인(브라우저에서 ID, PW -> 서버)
-    @app.route('/login', methods=['POST'])
+    @app.route('/login', methods=['GET', 'POST'])
     def login():
-        if request.methods == 'POST':
+        if request.method == 'POST':
             username = request.form['username']
             password =request.form['password']
 
@@ -24,9 +24,9 @@ def configure_route(app):
 
             # 유저정보를 찾은 결과와 username에 해당하는 사용자의 비밀번호를 확인
             # 브라우저에서 입력한 PW가 일치하면 
-            if user and users[username]['paasword'] == password:
+            if user and users[username]['password'] == password:
                 login_user(user) # User 인스턴스를 세션에 저장
-
+                print("세션 내용:", dict(session))  # 세션에 어떤 정보가 저장되어 있는지 확인
                 return redirect(url_for('index'))
 
             else:
@@ -36,9 +36,14 @@ def configure_route(app):
     
     @app.route('/logout')
     def logout():
-        logout_user()
+        logout_user()   # 세션 종료
+        session.clear() # 모든 세션 데이터 제거(쿠키 무력화)
+        print("세션 내용:", dict(session))  # 세션에 어떤 정보가 저장되어 있는지 확인
+        return redirect(url_for('index'))
 
     @app.route('/protected')
-    @login_required
+    @login_required # 로그인한 사용자만 접근
     def protected():
         return "<h1>Protected area</h1> <a href='/logout'>Logout</a>"
+
+
