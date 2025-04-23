@@ -5,6 +5,8 @@
 from db import db
 
 # 테이블 명
+# 실제 DB에 생성될 테이블 구조를 정의합니다.
+# flask db migrate / upgrade 등을 통해 DB 테이블 생성 및 수정 가능.
 class User(db.Model):
     __tablename__ = "users"
 
